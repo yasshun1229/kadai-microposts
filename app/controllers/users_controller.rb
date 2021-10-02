@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :require_user_logged_in, only: [:index, :show, :followings, :followers]
-  
+
   def index
     @pagy, @users = pagy(User.order(id: :desc), items: 25)
   end
@@ -17,30 +17,35 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    
+
     if @user.save
-      flash[:success] = "ユーザを登録しました"
+      flash[:success] = 'ユーザを登録しました。'
       redirect_to @user
     else
-      flash.now[:danger] = "ユーザの登録に失敗しました"
+      flash.now[:danger] = 'ユーザの登録に失敗しました。'
       render :new
     end
   end
   
-  def followeings
+  def destroy # 教材にはないですが、ユーザをどうしても削除したいことがあるので記載しました。
     @user = User.find(params[:id])
-    @pagy, @followeings = pagy(@user.followeings)
+    @user.destroy
+  end
+
+  def followings
+    @user = User.find(params[:id])
+    @pagy, @followings = pagy(@user.followings)
     counts(@user)
   end
-  
+
   def followers
     @user = User.find(params[:id])
     @pagy, @followers = pagy(@user.followers)
     counts(@user)
   end
-    
+
   private
-  
+
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end

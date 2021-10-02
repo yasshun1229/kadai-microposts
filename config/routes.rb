@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     # ログインユーザがユーザをフォローできる設定およびフォロー中のユーザとフォローされているユーザ一覧を表示するページ作成
     member do
       get :followings
-      get :fowwers
+      get :followers
     end
     collection do
       get :search
