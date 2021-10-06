@@ -33,21 +33,20 @@ class User < ApplicationRecord
   end
   
   # お気に入り関係の関連モデルの追記
-  has_many :favoriteships # 「自分がお気に入り登録しているMicropost」の参照
-  has_many :favoritings, through: :favoriteships, source: :user # 「お気に入り登録しているMicropost」の取得  
-  has_many :reverses_of_favoriteship # 「お気に入り登録されている」という関係の参照
-  has_many :favoriters, through: :reverses_of_favoriteship, source: :user # 「お気に入り登録されているUser達」の取得  
+  has_many :favorites # 「自分がお気に入り登録しているMicropost」の参照
+  has_many :likings, through: :favorites, source: :micropost # 「お気に入り登録しているMicropost」の取得
+  # throughはモデル、sourceはどこから取得するか
   
-  def favorite(other_micropost)
-    self.favoriteships.find_or_create_by(favorite_id: other_micropost.id) # お気に入りの重複対策
+  def like(other_micropost)
+    self.favorites.find_or_create_by(micropost_id: other_micropost.id) # お気に入りの重複対策
   end
   
-  def unfavorite(other_micropost) # お気に入り登録していれば外す
-    favoriteship = self.favoriteships
-    favoriteship.destroy if favoriteship # favotireshipが存在すれば、destroyする
+  def unlike(other_micropost) # お気に入り登録していれば外す
+    like = self.favorites.find_by(micropost_id: other_micropost.id)
+    like.destroy if like # favotiresが存在すれば、destroyする
   end
   
-  def favoriting?(other_micropost)
-    self.favoritings.include(other_micropost) # お気に入り登録しているMicropostを取得し、お気に入りではないMicropostが含まれていないか確認
+  def liking?(other_micropost)
+    self.likings.include?(other_micropost) # お気に入り登録しているMicropostを取得し、お気に入りではないMicropostが含まれていないか確認
   end
 end

@@ -1,4 +1,4 @@
-<% if microposts.any? %>
+<% if microposts.any? %> 
   <ul class="list-unstyled mt-2">
     <% microposts.each do |micropost| %>
       <li class="d-flex">
@@ -10,10 +10,10 @@
           <div>
             <p><%= micropost.content %></p>
           </div>
-          <div>
             <% if current_user == micropost.user %>
+            <!--横に並べたい-->
               <%= link_to "Delete", micropost, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-sm' %>
-              <%= link_to "Favorite", micropost, method: :favorite, class: 'btn btn-warning btn-sm text-light' %> 
+              <%= render "favorites/like_button", micropost: micropost %>
             <% end %>
           </div>
         </div>
@@ -22,3 +22,5 @@
   </ul>
   <%== pagy_bootstrap_nav(@pagy) %>
 <% end %>
+
+<!---->
