@@ -1,13 +1,13 @@
-  <% if current_user.liking?(micropost) %> <!--もし、ログイン中のユーザがお気に入り登録したら-->
-    <%= form_with(model: current_user.favorites.find_by(micropost_id: micropost.id), method: :delete) do |f| %><!--お気に入り解除できるものを取り出す-->
-      <%= hidden_field_tag :micropost_id, micropost.id %><!--<input type="hidden" name="follow_id" value="micropost_id">の生成-->
-      <%= f.submit "Unlike", class: "btn btn-success btn-sm text-light" %><!--Unfavoriteボタンを表示する-->
-    <% end %>
-  <% else %><!--違ければ-->
-    <%= form_with(model: current_user.favorites.build) do |f| %><!--お気に入り登録中のMicropostではなかったら、-->
-      <%= hidden_field_tag :micropost_id, micropost.id %><!--<input type="hidden" name="favorite_id" value="micropost_id">の生成-->
-      <%= f.submit "Like", class: "btn btn-warning btn-sm text-light" %><!--Favoriteボタンを表示する-->
-    <% end %>
+<% if current_user.liking?(micropost) %> <!--もし、ログイン中のユーザがお気に入り登録したら-->
+  <%= form_with(model: current_user.favorites.find_by(micropost_id: micropost.id), method: :delete) do |f| %><!--お気に入り解除できるものを取り出す-->
+    <%= hidden_field_tag :micropost_id, micropost.id %><!--<input type="hidden" name="follow_id" value="micropost_id">の生成-->
+    <%= f.submit "Unlike", class: "btn btn-success btn-sm text-light" %><!--Unfavoriteボタンを表示する-->
   <% end %>
+<% else %><!--違ければ-->
+  <%= form_with(model: current_user.favorites.build) do |f| %><!--お気に入り登録中のMicropostではなかったら、-->
+    <%= hidden_field_tag :micropost_id, micropost.id %><!--<input type="hidden" name="favorite_id" value="micropost_id">の生成--> 
+    <%= f.submit "Like", class: "btn btn-warning btn-sm text-light" %><!--Favoriteボタンを表示する-->
+  <% end %>
+<% end %>
 
-<!---->
+<!--:micropost_idかも-->

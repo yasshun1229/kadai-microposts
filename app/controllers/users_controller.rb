@@ -1,12 +1,12 @@
 class UsersController < ApplicationController
-  before_action :require_user_logged_in, only: [:index, :show, :followings, :followers]
+  before_action :require_user_logged_in, only: [:index, :show, :followings, :followers, :likes]
 
   def index
     @pagy, @users = pagy(User.order(id: :desc), items: 25)
   end
 
   def show
-    @user = User.find(params[:id])
+    find_user_id
     @pagy, @microposts = pagy(@user.microposts.order(id: :desc))
     counts(@user)
   end
@@ -28,30 +28,35 @@ class UsersController < ApplicationController
   end
   
   def destroy # 教材にはないですが、ユーザをどうしても削除したいことがあるので記載しました。
-    @user = User.find(params[:id])
+    find_user_id
     @user.destroy
   end
 
   def followings
-    @user = User.find(params[:id])
+    find_user_id
     @pagy, @followings = pagy(@user.followings)
     counts(@user)
   end
 
   def followers
-    @user = User.find(params[:id])
+    find_user_id
     @pagy, @followers = pagy(@user.followers)
     counts(@user)
   end
   
-  # def likings
-  #   @user = User.find(params[:id])
-  #   @pagy, @likings = pagy(@user.likings)
-  # end
+  def likes
+    find_user_id
+    @pagy, @likings = pagy(@user.likings)
+    counts(@user)
+  end
 
   private
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+  
+  def find_user_id
+    @user = User.find(params[:id])
   end
 end
