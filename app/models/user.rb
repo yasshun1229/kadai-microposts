@@ -6,8 +6,8 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false }
   has_secure_password
   
-  belongs_to :micropost
-  validates :content, presence: true, length: { maximum: 255 }
+  # belongs_to :micropost
+  # validates :content, presence: true, length: { maximum: 255 }
   
   # フォロー関係の関連モデルへの追記
   has_many :microposts
