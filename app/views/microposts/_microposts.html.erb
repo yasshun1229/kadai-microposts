@@ -10,17 +10,17 @@
           <div>
             <p><%= micropost.content %></p>
           </div>
-            <%= render "favorites/like_button", micropost: micropost %>
+          <div>
             <% if current_user == micropost.user %>
-            <!--横に並べたい-->
               <%= link_to "Delete", micropost, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-sm' %>
             <% end %>
-            <%== pagy_bootstrap_nav(@pagy) %>
           </div>
+            <%= render "favorites/like_button", micropost: micropost %>
         </div>
       </li>
     <% end %>
   </ul>
+  <%== pagy_bootstrap_nav(@pagy) %>
 <% end %>
 
 <!---->

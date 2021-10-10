@@ -5,7 +5,10 @@ class User < ApplicationRecord
                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
                     uniqueness: { case_sensitive: false }
   has_secure_password
-
+  
+  belongs_to :micropost
+  validates :content, presence: true, length: { maximum: 255 }
+  
   # フォロー関係の関連モデルへの追記
   has_many :microposts
   has_many :relationships
