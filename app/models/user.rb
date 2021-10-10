@@ -49,4 +49,8 @@ class User < ApplicationRecord
   def liking?(other_micropost)
     self.likings.include?(other_micropost) # お気に入り登録しているMicropostを取得し、お気に入りではないMicropostが含まれていないか確認
   end
+  
+  # def feed_microposts
+  #   Micropost.where(user_id: self.likings_ids + [self.id])
+  # end
 end

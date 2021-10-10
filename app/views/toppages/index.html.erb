@@ -12,7 +12,7 @@
       <%= render 'microposts/microposts', microposts: @microposts %>
     </div>
   </div>
-<% else %>
+<% else %><!--ログインしていない場合のトップページ-->
   <div class="bg-secondary p-3 p-sm-5 my-4 rounded">
     <div class="text-center text-white">
       <h1>Welcome to the Microposts</h1>
@@ -20,3 +20,4 @@
     </div>
   </div>
 <% end %>
+
