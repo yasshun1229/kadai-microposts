@@ -37,7 +37,7 @@ class User < ApplicationRecord
   
   # お気に入り関係の関連モデルの追記
   has_many :favorites # 「自分がお気に入り登録しているMicropost」の参照
-  has_many :likings, through: :favorites, source: :micropost # 「お気に入り登録しているMicropost」の取得
+  has_many :likings, through: :favorites, source: :micropost, dependent: :destroy # 「お気に入り登録しているMicropost」の取得
   # throughはモデル、sourceはどこから取得するか
   
   def like(other_micropost)
@@ -45,7 +45,7 @@ class User < ApplicationRecord
   end
   
   def unlike(other_micropost) # お気に入り登録していれば外す
-    like = self.favorites.find_by(micropost_id: other_micropost.id)
+    like = self.favorites.find_by(micropost_id: other_micropost.id) 
     like.destroy if like # favotiresが存在すれば、destroyする
   end
   
